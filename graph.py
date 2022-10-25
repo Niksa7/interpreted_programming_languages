@@ -23,10 +23,9 @@ def main():
     pygame.display.set_caption('Флаг')
 
     pygame.draw.rect(screen, GREEN, pygame.Rect(0, 0, 1024, 720))
-    pygame.draw.rect(screen, RED, pygame.Rect(612, 0, 512, 240))
-    pygame.draw.rect(screen, RED, pygame.Rect(612, 480, 512, 240))
-    pygame.draw.polygon(screen, (255, 0, 0), (612, 480, 512, 240), 0)
-
+    pygame.draw.rect(screen, RED, pygame.Rect(512, 0, 512, 240))
+    pygame.draw.rect(screen, RED, pygame.Rect(512, 480, 512, 240))
+    pygame.draw.polygon(screen, WHITE, [[250, 0], [280, 0], [260, 260], [280, 280]])
     while True:
         event_handler()
 
