@@ -31,8 +31,7 @@ dictionary_new1 = dictionary
 for key in dictionary_new1:
     dictionary[key] = int(round(dictionary_new1[key]/TFEP))
     sum += dictionary[key]
-print(dictionary)
-
+"""print(dictionary)"""
 """dictionary_new2 = dictionary
 for key in dictionary_new2:
     dictionary_new2[key] = (dictionary_new1[key]/TFEP) % 1
@@ -48,10 +47,12 @@ if sum != 450:
     while i != 0:
         max_value = max(dictionary_new2.values())
         final_dict = {k: v for k, v in dictionary_new2.items() if v == max_value} # находит все ключи словаря с макс. дробной частью
-        if(len(final_dict) == 1):
-            keys = final_dict.keys()
-            dictionary[keys[1]] += 1
-            i -= 1
-        if(len(final_dict) > 1):
-            keys = final_dict.keys()
-            
+        keys = final_dict.keys()
+        dictionary[keys] += 1
+        dictionary_new2.pop(keys)
+        i -= 1
+
+fileout = open("Output.txt", "w")
+for key in dictionary:
+    fileout.write(f'{key} {dictionary[key]}\n')
+fileout.close()
