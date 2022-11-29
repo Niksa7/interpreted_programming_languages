@@ -41,22 +41,22 @@ def compare(triangle_square, rectangle_square):
 
 
 def intersection(t1, t2):
-    TRIANGLE_dot0 = t1.dot0
-    RECTANGLE_dot0 = t2.dot0
-    Triangle_h = t1.line * (math.sqrt(3) / 2)
-    array1 = [TRIANGLE_dot0[0], Triangle_h, t1.line, TRIANGLE_dot0[1]]
-    array2 = [RECTANGLE_dot0[0], t2.h, t2.w, RECTANGLE_dot0[1]]
-    x1 = [TRIANGLE_dot0[0], t1.line]
-    x2 = [RECTANGLE_dot0[0], t2.w]
-    y1 = [Triangle_h, TRIANGLE_dot0[1]]
-    y2 = [t2.h, RECTANGLE_dot0[1]]
-    if max(x1) < min(x2) or max(y1) < min(y2) or min(y1) > max(y2):
+    T_dot0 = t1.dot0
+    R_dot0 = t2.dot0
+    T_h = t1.line * (math.sqrt(3) / 2)
+    array1 = [T_dot0[0], T_h, t1.line, T_dot0[1]]
+    array2 = [R_dot0[0], t2.h, t2.w, R_dot0[1]]
+    x1 = [T_dot0[0], t1.line]
+    x2 = [R_dot0[0], t2.w]
+    y1 = [T_h, T_dot0[1]]
+    y2 = [t2.h, R_dot0[1]]
+    if max(x1) < min(x2) or min(x1) > max(x2) or max(y1) < min(y2) or min(y1) > max(y2):
         print("Не пересекается")
     else:
         print("Пересекается")
 
 
-Rectangle_1 = Rectangle((1, 1), 20, 10)
+Rectangle_1 = Rectangle((200, 200), 30, 10)
 Triangle_1 = Triangle((0, 0), 10)
 print(Rectangle_1.square())
 print(Triangle_1.square())
