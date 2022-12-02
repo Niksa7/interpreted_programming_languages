@@ -3,6 +3,7 @@ import math
 
 class Triangle(object):
     dot0: list
+    line: int
 
     def __init__(self, dot0=(0, 0), line=1):
         self.dot0 = dot0
@@ -29,15 +30,15 @@ class Rectangle(object):
 
 
 def compare(triangle_square, rectangle_square):
-    obj1 = triangle_square
-    obj2 = rectangle_square
+    obj1 = triangle_square.square()
+    obj2 = rectangle_square.square()
 
     if obj1 > obj2:
         s = obj1 - obj2
-        print("Площадь треугольника > площади прямоугольника")
+        print(f"Площадь треугольника > площади прямоугольника на {s}")
     else:
         s = obj2 - obj1
-        print("Площадь треугольника < площади прямоугольника")
+        print(f"Площадь треугольника < площади прямоугольника на {s}")
 
 
 def intersection(t1, t2):
@@ -46,19 +47,25 @@ def intersection(t1, t2):
     T_h = t1.line * (math.sqrt(3) / 2)
     array1 = [T_dot0[0], T_h, t1.line, T_dot0[1]]
     array2 = [R_dot0[0], t2.h, t2.w, R_dot0[1]]
-    x1 = [T_dot0[0], t1.line]
-    x2 = [R_dot0[0], t2.w]
-    y1 = [T_h, T_dot0[1]]
-    y2 = [t2.h, R_dot0[1]]
+    x12 = T_dot0[0] + t1.line
+    x22 = R_dot0[0] + t2.w
+    x1 = [T_dot0[0], x12]
+    x2 = [R_dot0[0], x22]
+    y12 = T_dot0[1] + T_h
+    y22 = R_dot0[1] + t2.h
+    y1 = y12
+    y2 = [R_dot0[1], y22]
     if max(x1) < min(x2) or min(x1) > max(x2) or max(y1) < min(y2) or min(y1) > max(y2):
         print("Не пересекается")
     else:
         print("Пересекается")
 
 
-Rectangle_1 = Rectangle((200, 200), 30, 10)
+Rectangle_1 = Rectangle((5, 5), 30, 10)
 Triangle_1 = Triangle((0, 0), 10)
+print("Площадь прямоугольника")
 print(Rectangle_1.square())
+print("Площадь треугольника")
 print(Triangle_1.square())
-compare(Triangle_1.square(), Rectangle_1.square())
+compare(Triangle_1, Rectangle_1)
 intersection(Triangle_1, Rectangle_1)
