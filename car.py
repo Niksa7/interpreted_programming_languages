@@ -68,58 +68,124 @@ def drawCar():
     glTranslatef(0, 0, -0.5)
 
     # лобовая часть
-    glColor3f(0, 0, 255)
+    glColor3f(0.0, 0.5, 1.0)
     glTranslatef(1.5, 0, 0.4)
     drawCube(0.5, 0.4, 0.4)
     glTranslatef(-1.5, 0, -0.4)
 
 
     # колесо 1
-    glColor3f(1, 1, 1)
+    glColor3f(0.1, 0.1, 0.1)
     glTranslatef(-0.75, 0.25, 0)
     drawCube(0.175, 0.1, 0.2)
     glTranslatef(0.75, -0.25, 0)
 
     # колесо 2
-    glColor3f(1, 1, 1)
+    glColor3f(0.1, 0.1, 0.1)
     glTranslatef(-0.75, -0.25, 0)
     drawCube(0.175, 0.1, 0.2)
     glTranslatef(0.75, 0.25, 0)
 
     # колесо 3
-    glColor3f(1, 1, 1)
+    glColor3f(0.1, 0.1, 0.1)
     glTranslatef(-0.2, -0.25, 0)
     drawCube(0.175, 0.1, 0.2)
     glTranslatef(0.2, 0.25, 0)
 
     # колесо 4
-    glColor3f(1, 1, 1)
+    glColor3f(0.1, 0.1, 0.1)
     glTranslatef(-0.2, 0.25, 0)
     drawCube(0.175, 0.1, 0.2)
     glTranslatef(0.2, -0.25, 0)
 
     # колесо 5
-    glColor3f(1, 1, 1)
+    glColor3f(0.1, 0.1, 0.1)
     glTranslatef(1.5, 0.25, 0)
     drawCube(0.175, 0.1, 0.2)
     glTranslatef(-1.5, -0.25, 0)
 
     # колесо 6
-    glColor3f(1, 1, 1)
+    glColor3f(0.1, 0.1, 0.1)
     glTranslatef(1.5, -0.25, 0)
     drawCube(0.175, 0.1, 0.2)
     glTranslatef(-1.5, 0.25, 0)
 
+    # диск 1
+    glColor3f(1, 1, 1)
+    glTranslatef(-0.75, 0.27, 0)
+    drawCube(0.12, 0.1, 0.12)
+    glTranslatef(0.75, -0.27, 0)
+
+    # диск 2
+    glColor3f(1, 1, 1)
+    glTranslatef(-0.75, -0.27, 0)
+    drawCube(0.12, 0.1, 0.12)
+    glTranslatef(0.75, 0.27, 0)
+
+    # диск 3
+    glColor3f(1, 1, 1)
+    glTranslatef(-0.2, -0.27, 0)
+    drawCube(0.12, 0.1, 0.12)
+    glTranslatef(0.2, 0.27, 0)
+
+    # диск 4
+    glColor3f(1, 1, 1)
+    glTranslatef(-0.2, 0.27, 0)
+    drawCube(0.12, 0.1, 0.12)
+    glTranslatef(0.2, -0.27, 0)
+
+    # диск 5
+    glColor3f(1, 1, 1)
+    glTranslatef(1.5, 0.27, 0)
+    drawCube(0.12, 0.1, 0.12)
+    glTranslatef(-1.5, -0.27, 0)
+
+    # диск 6
+    glColor3f(1, 1, 1)
+    glTranslatef(1.5, -0.27, 0)
+    drawCube(0.12, 0.1, 0.12)
+    glTranslatef(-1.5, 0.27, 0)
+
     #фара 1
     glColor4f(1, 0.5, 0, 0)
-    glTranslatef(0.26, -0.06, -0)
-    drawCube(-0.05, 0.03, -0.04)
+    glTranslatef(1.95, 0.2, 0.2)
+    drawCube(-0.075, 0.1, -0.04)
+    glTranslatef(-1.95, -0.2, -0.2)
 
-    # фара 1
-    glTranslatef(0.03, -0.1, -0)
-    drawCube(-0.05, 0.03, -0.04)
+    # фара 2
+    glTranslatef(1.95, -0.2, 0.2)
+    drawCube(-0.075, 0.1, -0.04)
+    glTranslatef(-1.95, 0.2, -0.2)
 
+    # Лобовое стекло
+    glColor4f(1, 1, 1, 0)
+    glTranslatef(1.61, 0, 0.55)
+    drawCube(0.4, 0.3, 0.15)
+    glTranslatef(-1.61, 0, -0.55)
 
+    # Ручка 1
+    glColor4f(0.1, 0.1, 0.1, 0)
+    glTranslatef(1.5, -0.31, 0.3)
+    drawCube(0.05, 0.1, 0.02)
+    glTranslatef(-1.5, 0.31, -0.3)
+
+    # Ручка 2
+    glColor4f(0.1, 0.1, 0.1, 0)
+    glTranslatef(1.5, 0.31, 0.3)
+    drawCube(0.05, 0.1, 0.02)
+    glTranslatef(-1.5, -0.31, -0.3)
+
+    # Боковое 1
+    glColor4f(1, 1, 1, 0)
+    glTranslatef(1.5, 0.31, 0.55)
+    drawCube(0.3, 0.1, 0.15)
+    glTranslatef(-1.5, -0.31, -0.55)
+
+    # Боковое 2
+    glColor4f(1, 1, 1, 0)
+    glTranslatef(1.5, -0.31, 0.55)
+    drawCube(0.3, 0.1, 0.15)
+    glTranslatef(-1.5, 0.31, -0.55)
 
 
 pygame.init()
