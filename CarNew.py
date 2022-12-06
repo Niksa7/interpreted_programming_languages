@@ -1,7 +1,5 @@
-import sys
-# import math
-import glfw
-import pygame as pg
+import math
+import pygame
 from pygame.locals import *
 
 from OpenGL.GL import *
@@ -10,12 +8,11 @@ from OpenGL.GLUT import *
 
 
 def func():
-    import math
 
-    glutInit(sys.argv)
-    pg.init()
+    glutInit()
+    pygame.init()
     display = (1200, 900)
-    scree = pg.display.set_mode(display, DOUBLEBUF | OPENGL)
+    scree = pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
 
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_LIGHTING)
@@ -36,9 +33,9 @@ def func():
     glLoadIdentity()
     displayCenter = [scree.get_size()[i] // 2 for i in range(2)]
     mouseMove = [0, 0]
-    pg.mouse.set_pos(displayCenter)
+    pygame.mouse.set_pos(displayCenter)
 
-    pg.mouse.set_visible(False)
+    pygame.mouse.set_visible(False)
     up_down_angle = 0.0
     paused = False
     run = True
@@ -54,23 +51,23 @@ def func():
     glLightfv(GL_LIGHT0, GL_POSITION, lightpos)
 
     while run:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 run = False
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_ESCAPE or event.key == pg.K_RETURN:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
                     run = False
-                if event.key == pg.K_PAUSE or event.key == pg.K_p:
+                if event.key == pygame.K_PAUSE or event.key == pygame.K_p:
                     paused = not paused
-                    pg.mouse.set_pos(displayCenter)
+                    pygame.mouse.set_pos(displayCenter)
             if not paused:
-                if event.type == pg.MOUSEMOTION:
+                if event.type == pygame.MOUSEMOTION:
                     mouseMove = [event.pos[i] - displayCenter[i] for i in range(2)]
-                pg.mouse.set_pos(displayCenter)
+                pygame.mouse.set_pos(displayCenter)
 
         if not paused:
             # get keys
-            keypress = pg.key.get_pressed()
+            keypress = pygame.key.get_pressed()
             # mouseMove = pygame.mouse.get_rel()
 
             # init model view matrix
@@ -85,13 +82,13 @@ def func():
             glLoadIdentity()
             ms = 0.06
             # apply the movment
-            if keypress[pg.K_w]:
+            if keypress[pygame.K_w]:
                 glTranslatef(0, 0, ms)
-            if keypress[pg.K_s]:
+            if keypress[pygame.K_s]:
                 glTranslatef(0, 0, -ms)
-            if keypress[pg.K_d]:
+            if keypress[pygame.K_d]:
                 glTranslatef(-ms, 0, 0)
-            if keypress[pg.K_a]:
+            if keypress[pygame.K_a]:
                 glTranslatef(ms, 0, 0)
 
             # apply the left and right rotation
@@ -178,10 +175,10 @@ def func():
             glutSolidCube(0.1)
             glPopMatrix()
 
-        pg.display.flip()  # Update the screen
-        pg.time.wait(10)
+        pygame.display.flip()  # Update the screen
+        pygame.time.wait(10)
 
-    pg.quit()
+    pygame.quit()
 
 
 if __name__ == '__main__':
