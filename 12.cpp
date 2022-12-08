@@ -1,9 +1,6 @@
 #include <iostream>
 #include <math.h>
-#include <string.h>
 #include <string>
-#include <stdio.h>
-#include <stdlib.h>
 
 using namespace std;
 
@@ -164,7 +161,8 @@ int main()
 
 
     cout << "\nТекст для шифрования:" << endl;
-    cin >> msg;
+    cin.ignore();
+    getline(cin, msg);
 
     // encryption
 
