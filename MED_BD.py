@@ -1,279 +1,110 @@
 import sqlite3
 
-conn = sqlite3.connect('SQLite_Database.db')
+con = sqlite3.connect("Medicine.db")
 
-def sql_client(conn):
-    cur = conn.cursor()
+def sql_tables():
+
+    con.execute(
+        "CREATE TABLE IF NOT EXISTS client("
+        "id_client INTEGER PRIMARY KEY autoincrement,"
+        "surname_cl TEXT,"
+        "name_cl TEXT,"
+        "age_cl INTEGER,"
+        "phone_cl INTEGER);"
+    )
+
+    con.execute(
+        "CREATE TABLE IF NOT EXISTS doctor("
+        "id_doctor INTEGER PRIMARY KEY autoincrement,"
+        "surname_doc TEXT,"
+        "name_doc TEXT,"
+        "specialization_doc TEXT,"
+        "cabinet INTEGER,"
+        "polyclinic INTEGER,"
+        "age_doc INTEGER,"
+        "phone_doc INTEGER);"
+    )
+
+    con.execute(
+        "CREATE TABLE IF NOT EXISTS reception("
+        "id_reception INTEGER PRIMARY KEY autoincrement,"
+        "id_client INTEGER,"
+        "id_doctor INTEGER,"
+        "dateRec INTEGER,"
+        "timeRec INTEGER,"
+        "diagnose INTEGER,"
+        "price INTEGER,"
+        "FOREIGN KEY(id_client) REFERENCES client (id_client),"
+        "FOREIGN KEY(id_doctor) REFERENCES doctor (id_doctor));"
+    )
+
+def tables_insert():
+
+    con.execute(
+        "INSERT INTO client(surname_cl, name_cl, age_cl, phone_cl) VALUES"
+        "('Трофимов', 'Артур', 33, 89825120099),"
+        "('Макаров', 'Андрей', 35, 89825121188),"
+        "('Леонов', 'Илья', 40, 88005553535),"
+        "('Андреев', 'Михаил', 28, 89505230310)"
+    )
+
+    con.execute(
+        "INSERT INTO doctor(surname_doc, name_doc, specialization_doc, cabinet, polyclinic, age_doc, phone_doc) VALUES"
+        "('Нестерова', 'Полина', 'Аллерголог', 315, 12, 25, 89825183566),"
+        "('Шувалов', 'Марк', 'Психолог', 202, 7, 27, 89825261378),"
+        "('Еремеев', 'Максим', 'Стоматолог', 119, 3, 26, 89826341688),"
+        "('Лебедев', 'Матвей', 'Хирург', 404, 5, 29, 89824322655)"
+    )
+
+    con.execute(
+        "INSERT INTO reception(id_client, id_doctor, dateRec, timeRec, diagnose, price) VALUES"
+        "(1, 3, date('2022-04-21'), time('08:00:00'), 'Удаление', 1500),"
+        "(2, 4, date('2022-05-26'), time('09:00:00'), 'Грипп', 0),"
+        "(3, 2, date('2022-08-07'), time('10:30:00'), 'Депрессия', 1000)"
+    )
+
+def select_client():
+
+    cur = con.cursor()
     cur.execute(
-        "CREATE TABLE Client("
-        "IDClient integer PRIMARY KEY,"
-        "Name text,"
-        "Surname text,"
-        "Age integer,"
-        "Phone integer)"
+        "select id_client, surname_cl, name_cl, age_cl, phone_cl from client"
     )
+    res = cur.fetchall()
+    cur.close()
+    return res
 
-def sql_doctor(conn):
-    cur = conn.cursor()
+def select_doctor():
+
+    cur = con.cursor()
     cur.execute(
-        "CREATE TABLE Doctor("
-        "IDDoctor integer PRIMARY KEY,"
-        "Name text,"
-        "Surname text,"
-        "Specialization text,"
-        "Cabinet integer,"
-        "Polyclinic integer,"
-        "Age integer,"
-        "Phone integer)"
+        "select id_doctor, surname_doc, name_doc, specialization_doc, cabinet, polyclinic, age_doc, phone_doc from client"
     )
+    res = cur.fetchall()
+    cur.close()
+    return res
 
-def sql_reception(conn):
-    cur = conn.cursor()
+def select_doctor():
+
+    cur = con.cursor()
     cur.execute(
-        "CREATE TABLE Doctor("
-        "IDReception integer PRIMARY KEY,"
-        "IDPacient integer,"
-        "IDDoctor integer,"
-        "DateRec integer,"
-        "TimeRec integer,"
-        "Cabinet integer,"
-        "Diagnose integer,"
-        "Price integer)"
+        "select id_doctor, surname_doc, name_doc, specialization_doc, cabinet, polyclinic, age_doc, phone_doc from doctor"
     )
+    res = cur.fetchall()
+    cur.close()
+    return res
 
-"""def sql_connection():
-    try:
-        con = sqlite3.connect('SQL_Exhibition')
-        return con
-        print("GOOD")
-    except Error:
-        print(Error)
+def get_all_product_joined():
+    cur = con.cursor()
+    cur.execute(
+        """select reception.id_client, reception.id_doctor, dateRec, timeRec, diagnose, price from reception
+        INNER JOIN client on reception.id_client==client.id_client
+        INNER JOIN doctor on reception.id_doctor==doctor.id_doctor"""
+)
+    res = cur.fetchall()
+    cur.close()
+    return res
 
-
-
-#
-def sql_Exhibition(con):
-    cursorObj = con.cursor()
-    cursorObj.execute(
-        "CREATE TABLE Exhibition("
-        "IDExhibition integer PRIMARY KEY,"
-        "Stands integer,"
-        "Them text,"
-        "Price integer,"
-        "WholePrice integer)"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO Exhibition "
-        "VALUES(1,1,'Тема','3456','7777')"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO Exhibition "
-        "VALUES(2,3,'Темаf', 4444,8888)"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO Exhibition "
-        "VALUES(3,54,'Тема3', 222,1222)"
-    )
-    con.commit()
-
-
-def sql_Excurse(con):
-    cursorObj = con.cursor()
-    cursorObj.execute(
-        "CREATE TABLE Excurse("
-        "IDExcurse integer PRIMARY KEY,"
-        "IDExhibition integer,"
-
-
-        "IDStand integer,"
-        "Date datetime)"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO Excurse "
-        "VALUES(1,1,1,'18.02.1999')"
-    )
-    cursorObj.execute(
-        "INSERT INTO Excurse "
-        "VALUES(2,2,2,'18.02.1998')"
-    )
-
-    con.commit()
-
-
-def sql_Stand(con):
-    cursorObj = con.cursor()
-    cursorObj.execute(
-        "CREATE TABLE Stand("
-        "IDStand integer PRIMARY KEY,"
-
-        "ThemeStand text,"
-        "LocalPrice integer)"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO Stand "
-        "VALUES(1,'Nigg',222)"
-    )
-    cursorObj.execute(
-        "INSERT INTO Stand "
-        "VALUES(2,'Nigg1',222)"
-    )
-    cursorObj.execute(
-        "INSERT INTO Stand "
-        "VALUES(3,'Nigg2',232)"
-    )
-
-    con.commit()
-
-
-def sql_StandMan(con):
-    cursorObj = con.cursor()
-    cursorObj.execute(
-        "CREATE TABLE StandMan("
-        "IDStandMan integer PRIMARY KEY,"
-        "IDStand integer,"
-        "Surname text,"
-        "Firstname text,"
-        "Lastname text)"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO StandMan "
-        "VALUES(1,1,'NNN','NNN', 'NNN')"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO StandMan "
-        "VALUES(2,2,'XXX','XXX', 'XXX')"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO StandMan "
-        "VALUES(3,3,'EEE','EEE', 'EEE')"
-    )
-
-    con.commit()
-
-
-def sql_Client(con):
-    cursorObj = con.cursor()
-    cursorObj.execute(
-        "CREATE TABLE Client("
-        "IDClient integer PRIMARY KEY,"
-        "Age int,"
-        "Surname text,"
-        "Firstname text,"
-        "Lastname text)"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO Client "
-        "VALUES(1,5,'XXX','XXX','XXX')"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO Client "
-        "VALUES(2,6,'EEE','EEE','EEE')"
-    )
-    cursorObj.execute(
-        "INSERT INTO Client "
-        "VALUES(3,77,'X1X','X2X','X3X')"
-    )
-
-    con.commit()
-
-
-def sql_ClientExcurse(con):
-    cursorObj = con.cursor()
-    cursorObj.execute(
-        "CREATE TABLE ClientExcurse("
-        "IDClient, IDExcurse integer PRIMARY KEY)"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO ClientExcurse "
-        "VALUES(1,1)"
-    )
-
-    cursorObj.execute(
-        "INSERT INTO ClientExcurse "
-        "VALUES(2,2)"
-    )
-    cursorObj.execute(
-        "INSERT INTO ClientExcurse "
-        "VALUES(3,3)"
-    )
-
-    con.commit()
-
-
-def select(con):
-    cursorObj = con.cursor()
-    cursorObj.execute("SELECT name FROM sqlite_master WHERE type='table'")
-    table = cursorObj.fetchall()
-
-    tablesList = []
-    for tab in table:
-
-
-        tablesList.append(tab[0])
-
-        for listItem in tablesList:
-
-         cursorObj.execute(f'SELECT * from {listItem}')
-        [print(row) for row in cursorObj.fetchall()]
-        print(f'table {listItem}')
-
-    con = sql_connection()
-    #sql_Exhibition(con)
-
-    #sql_Excurse(con)
-
-
-def sql_update(con):
-    cursorObj = con.cursor()
-    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nigg" where IDStand = 1')
-    con.commit()
-
-    cursorObj = con.cursor()
-    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nigg1" where IDStand = 2')
-    con.commit()
-
-    cursorObj = con.cursor()
-    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nigg2" where IDStand = 3')
-    con.commit()
-
-
-def sql_delete(con):
-    cursorObj = con.cursor()
-    cursorObj.execute('DELETE from StandMan where Firstname = "EEE" ')
-    con.commit()
-
-def sql_insert(con):
-    cursorObj = con.cursor()
-    cursorObj.execute("INSERT INTO StandMan "
-        "VALUES(3,3,'EEE','EEE', 'EEE')")
-    con.commit()
-
-
-con = sql_connection()
-#sql_insert(con)
-#sql_Exhibition(con)
-#sql_Excurse(con)
-#sql_Stand(con)
-#sql_StandMan(con)
-#sql_ClientExcurse(con)
-#sql_Client(con)
-
-
-select(con)
-#print("Обновлённая бд")
-#sql_update(con)
-#select(con)
-#print("Бд с удалёнными полями")
-#sql_delete(con)
-#select(con"""
+sql_tables()
+#tables_insert()
+con.commit()
+print(get_all_product_joined())
